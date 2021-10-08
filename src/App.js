@@ -1,4 +1,5 @@
-import styled, { ThemeProvider } from "styled-components";
+import { useEffect, useState } from 'react';
+import { ThemeProvider} from "styled-components";
 
 //Import Components
 import Header from "./components/Header";
@@ -6,60 +7,99 @@ import Header from "./components/Header";
 //Import styles
 import Global from "./styles/global";
 import defaultTheme from "./styles/theme";
+import {
+  ButtonRandom,
+  Container, 
+  DataType, 
+  Image,
+  Main, 
+  Name, 
+  SectionData, 
+  SectionLeft, 
+  SectionRight, 
+  View,
+  View2
+} from './styles'
 
-// Styles
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  background: ${({ theme }) => theme.colors.background.gray};
-`;
-
-const Main = styled.main`
-  width: 100%;
-  height: 80%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ButtonRandom = styled.button`
-  border: none;
-  border-radius: 7px;
-  margin-bottom: 1.5rem;
-  padding: 10px 30px;
-  color: ${({ theme }) => theme.colors.text.white};
-  background-color: ${({ theme }) => theme.colors.background.button};
-`;
-
-const View = styled.div`
-  width: 50rem;
-  height: 25rem;
-
-  padding: 1.3rem;
-
-  border-radius: 8px;
-
-  background-color: ${({ theme }) => theme.colors.text.white};
-`;
+//Importing API
+import api from './services/api';
 
 //Function Main
 function App() {
-  return (
+  const [isShow, setIsShow] = useState(false);
+  const [generate, setGenerate] = useState(true);
+  // const [loading, setLoading] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState('normal')
+  const [data, setData] = useState();
+  
+  useEffect(()=>{
+    const randomId = Math.floor(Math.random() * 898) + 1;
+
+    api.get(`/pokemon/${randomId}`).then(response => {
+      const {
+        id, 
+        sprites, 
+        species, 
+        types,
+      } = response.data;
+      setBackgroundColor(types[0].type.name);
+
+      if (types[0].type.name === 'normal' && types.length > 1) {
+        setBackgroundColor(types[1].type.name);
+      }
+
+      setData({
+        id, 
+        images: sprites.other['official-artwork'].front_default || sprites.front_default,
+        specie: species.name,
+        type: types.map((pokemonType)=>({
+          name: pokemonType.type.name,
+          color: defaultTheme.colors.type[pokemonType.type.name]
+        }))
+      })
+      
+    })
+  }, [generate])
+ 
+  function handleClick(e){
+    e.preventDefault();
+
+    setGenerate(!generate)
+    setIsShow(true)
+    
+  }
+
+    return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
-      <Container>
+      <Container color={defaultTheme.colors.backgroundType[backgroundColor]}>
         <Header />
         <Main>
-          <ButtonRandom>Gerar Pokemón</ButtonRandom>
-          <View>Testando</View>
+          <View2> Click no botão para gerar um pokemon</View2>
+          <ButtonRandom
+            type='button'
+            onClick={handleClick}
+          >
+            Gerar Pokemón
+          </ButtonRandom>
+          {isShow && (
+            <View>
+              <SectionLeft>
+                <Image src={data.images} alt='pokemon'/>
+              </SectionLeft>
+              <SectionRight>
+                <Name>{data.specie}</Name>
+                <SectionData>
+                  {data.type.map(dataType=>(
+                    <DataType color={dataType.color} key={dataType.name}>
+                    {console.log(dataType)}
+                      <span>{dataType.name}</span>
+                    </DataType>
+                  ))}
+                </SectionData>
+              </SectionRight>
+            </View>
+          )}
         </Main>
       </Container>
     </ThemeProvider>
