@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { device } from "./media";
-
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -52,32 +50,58 @@ export const View = styled.div`
   border-radius: 8px;
 
   display: flex;
-  flex-direction: row;
+  
 
   background-color: ${({ theme }) => theme.colors.text.white};
+  flex-direction: row;
 
-  @media ${device.mobileS} {
+  @media (max-width: 640px) {
+    height: 20rem;
     flex-direction: column;
   }
-  @media ${device.mobileM} {
-    flex-direction: column;
-  }
-  @media ${device.mobileL} {
-    flex-direction: column;
+
+  @media (min-width: 641px) {
+    height: 21rem;
   }
 `;
 
 export const View2 = styled(View)`
-  width: 24rem;
-  height: 4rem;
+  width: 90%;
+  height: 12%;
 
   font-size: 18px;
+
+  margin-bottom: 13px;
 
   background: none;
   color: ${({ theme }) => theme.colors.text.white};
 
   font-weight: bold;
   font-style: italic;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 324px) {
+    font-size: 12px;
+  }
+
+  @media (min-width: 325px) and (max-width: 768px) {
+    font-size: 15px;
+  }
+
+  @media (min-width: 769px) and (max-width: 1170px) {
+    font-size: 19px;
+  }
+
+  @media (min-width: 1170px) and (max-width: 2000px){
+    font-size: 20px;
+  }
+
+  @media (min-width: 2000) {
+    font-size: 26px;
+  }
 `;
 
 export const SectionLeft = styled.div`
@@ -88,10 +112,30 @@ export const SectionLeft = styled.div`
   align-items: center;
 
   background-color: ${({ theme }) => theme.colors.background.button};
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Image = styled.img`
-  width: 18rem;
+  width: 25srem;
+
+  @media (max-width: 500px) {
+    width: 10rem;
+  }
+
+  @media (min-width: 501px) and (max-width: 728px){
+    width: 13rem;
+  }
+
+  @media (min-width: 768px) and (max-width: 1170px) {
+    width: 15rem;
+  }
+
+  @media (min-width: 1170px) {
+    width: 18rem ;
+  }
 `;
 
 export const Name = styled.span`

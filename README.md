@@ -10,8 +10,13 @@
 Na aplicação tem que ter um botão onde o usuário possa clicar, fazendo com que um novo
 pokémon seja renderizado randomicamente na tela, a cor de fundo da tela deve ser mudada de acordo com o tipo do pokémon.
 
+## Link para visualisar o projeto
+
+[Pokemon Link](https://pokemon-random-one.vercel.app)
+
 ## Ferramentas Utilizadas
 
 - React.js
 - Styled-components
 - Axios
+- Responsividade
