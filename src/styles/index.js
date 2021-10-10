@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { device } from "./media";
+
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -33,15 +35,16 @@ export const ButtonRandom = styled.button`
   color: ${({ theme }) => theme.colors.text.white};
   background-color: ${({ theme }) => theme.colors.background.button};
 
-  transition: ease-in-out .2s;
+  transition: ease-in-out 0.2s;
 
   &:hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
 
 export const View = styled.div`
-  width: 50rem;
+  width: 80%;
+  max-width: 50rem;
   height: 25rem;
 
   padding: 1.3rem;
@@ -52,6 +55,16 @@ export const View = styled.div`
   flex-direction: row;
 
   background-color: ${({ theme }) => theme.colors.text.white};
+
+  @media ${device.mobileS} {
+    flex-direction: column;
+  }
+  @media ${device.mobileM} {
+    flex-direction: column;
+  }
+  @media ${device.mobileL} {
+    flex-direction: column;
+  }
 `;
 
 export const View2 = styled(View)`
@@ -65,7 +78,7 @@ export const View2 = styled(View)`
 
   font-weight: bold;
   font-style: italic;
-`
+`;
 
 export const SectionLeft = styled.div`
   width: 40%;
@@ -87,7 +100,7 @@ export const Name = styled.span`
   font-weight: bold;
 
   text-transform: uppercase;
-  
+
   margin-bottom: 10px;
 `;
 
@@ -106,7 +119,7 @@ export const DataType = styled.div`
 
   margin: 3px;
 
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
 `;
 
 export const SectionRight = styled.div`
